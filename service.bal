@@ -19,4 +19,8 @@ service /api on new http:Listener(9090) {
     resource function get getAddressByNIC(string nic) returns json|error? {
         return getAddressByNIC(nic);
     }
+
+    resource function post userRequest(@http:Payload json payload) returns json|error? {
+        return postUserRequest(payload);
+    }
 }

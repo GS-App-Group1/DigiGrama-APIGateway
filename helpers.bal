@@ -12,15 +12,15 @@ isolated function getPoliceRecordFromNIC(string nic) returns json|error {
 
 isolated function getGSDivisionFromNIC(string nic) returns json|error {
     http:Client dbclient = check new ("http://localhost:9090");
-    return check dbclient->/health/getGSDivisionFromNIC(targetType = json, params = {"nic": nic});
+    return check dbclient->/identity/getGSDivisionFromNIC(targetType = json, params = {"nic": nic});
 }
 
 isolated function getAddressByNIC(string nic) returns json|error {
     http:Client dbclient = check new ("http://localhost:9090");
-    return check dbclient->/health/getAddressByNIC(targetType = json, params = {"nic": nic});
+    return check dbclient->/address/getAddressByNIC(targetType = json, params = {"nic": nic});
 }
 
-isolated function getVaccinationRecordFromNIC(string nic) returns json|error {
+isolated function postUserRequest(@http:Payload json payload) returns json|error {
     http:Client dbclient = check new ("http://localhost:9090");
-    return check dbclient->/health/getVaccinationRecordFromNIC(targetType = json, params = {"nic": nic});
+    return check dbclient->/health/postUserRequest.post(payload, targetType = json);
 }
