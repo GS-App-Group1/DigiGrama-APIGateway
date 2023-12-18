@@ -49,4 +49,8 @@ service /api on new http:Listener(9090) {
         return postUserRequest(payload);
     }
 
+    resource function get liveness() returns http:Ok {
+        return http:OK;
+    }
+
 }

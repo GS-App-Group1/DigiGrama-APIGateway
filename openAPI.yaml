@@ -230,6 +230,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorPayload"
+  /liveness:
+    get:
+      operationId: getLiveness
+      responses:
+        "200":
+          description: Ok
 components:
   schemas:
     ErrorPayload:
