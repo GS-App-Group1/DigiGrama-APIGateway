@@ -70,3 +70,7 @@ isolated function getUserRequestForNIC(string nic, string email) returns json|er
     return check dbclient->/main/getUserRequestForNIC(targetType = json, params = {"nic": nic, "email": email});
 }
 
+isolated function updateGSRequest(string nic, string email, string status) returns json|error {
+    http:Client dbclient = check new ("http://localhost:9090");
+    return check dbclient->/main/updateGSRequest.put(message = {}, targetType = json, params = {"nic": nic, "email": email, "status": status});
+}

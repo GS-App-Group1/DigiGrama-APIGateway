@@ -48,7 +48,11 @@ service /api on new http:Listener(9090) {
     resource function post userRequest(@http:Payload json payload) returns json|error? {
         return postUserRequest(payload);
     }
-
+    resource function put updateGSRequest(string nic, string email, string gsNote) returns json|error? {
+        _ = check validateNIC(nic);
+        _ = check validateEmail(email);
+        return updateGSRequest(nic, email, gsNote);
+    }
     resource function get liveness() returns http:Ok {
         return http:OK;
     }
