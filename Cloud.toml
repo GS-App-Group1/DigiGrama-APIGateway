@@ -1,6 +1,6 @@
 [container.image]
 repository="chathurag"
-name="DigiGrama-Address"
+name="DigiGrama-API"
 tag="0.1.0"
 
 [[cloud.config.files]]
