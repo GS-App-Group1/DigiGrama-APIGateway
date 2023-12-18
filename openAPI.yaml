@@ -3,74 +3,22 @@ info:
   title: Api
   version: 0.1.0
 servers:
-- url: "{server}:{port}/api"
-  variables:
-    server:
-      default: http://localhost
-    port:
-      default: "9090"
+  - url: "{server}:{port}/api"
+    variables:
+      server:
+        default: http://localhost
+      port:
+        default: "9090"
 paths:
-  /getIdentityFromNIC:
-    get:
-      operationId: getGetidentityfromnic
-      parameters:
-      - name: nic
-        in: query
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                type: object
-        "202":
-          description: Accepted
-        "400":
-          description: BadRequest
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorPayload'
-  /getPoliceRecordFromNIC:
-    get:
-      operationId: getGetpolicerecordfromnic
-      parameters:
-      - name: NIC
-        in: query
-        required: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                type: object
-        "202":
-          description: Accepted
-        "400":
-          description: BadRequest
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorPayload'
   /getGSDivisionFromNIC:
     get:
       operationId: getGetgsdivisionfromnic
       parameters:
-      - name: gsDivision
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: nic
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Ok
@@ -87,16 +35,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorPayload'
-  /getAddressByNIC:
+                $ref: "#/components/schemas/ErrorPayload"
+  /getUserRequests:
     get:
-      operationId: getGetaddressbynic
+      operationId: getGetuserrequests
       parameters:
-      - name: nic
-        in: query
-        required: true
-        schema:
-          type: string
+        - name: gsDivision
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Ok
@@ -113,7 +61,151 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorPayload'
+                $ref: "#/components/schemas/ErrorPayload"
+  /getUserRequestForNIC:
+    get:
+      operationId: getGetuserrequestfornic
+      parameters:
+        - name: nic
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+        "202":
+          description: Accepted
+        "400":
+          description: BadRequest
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+  /updateRequestStatus:
+    put:
+      operationId: putUpdaterequeststatus
+      parameters:
+        - name: nic
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+        "202":
+          description: Accepted
+        "400":
+          description: BadRequest
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+  /updateUserRequest:
+    put:
+      operationId: putUpdateuserrequest
+      parameters:
+        - name: nic
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: civilStatus
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: presentOccupation
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: reason
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+        "202":
+          description: Accepted
+        "400":
+          description: BadRequest
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+  /checkUserDetails:
+    get:
+      operationId: getCheckuserdetails
+      parameters:
+        - name: nic
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+        "202":
+          description: Accepted
+        "400":
+          description: BadRequest
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
   /userRequest:
     post:
       operationId: postUserrequest
@@ -137,7 +229,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorPayload'
+                $ref: "#/components/schemas/ErrorPayload"
 components:
   schemas:
     ErrorPayload:
