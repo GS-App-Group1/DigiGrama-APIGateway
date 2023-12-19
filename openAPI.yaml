@@ -10,6 +10,24 @@ servers:
       port:
         default: "9090"
 paths:
+  /insertCertificate:
+    post:
+      operationId: postInsertcertificate
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+      responses:
+        "202":
+          description: Accepted
+        "400":
+          description: BadRequest
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
   /requestCertificate:
     get:
       operationId: getRequestcertificate
