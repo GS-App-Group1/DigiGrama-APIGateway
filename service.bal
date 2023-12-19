@@ -33,6 +33,11 @@ service /certificate on new http:Listener(9090) {
         self.databaseClient = check new ({connection: {url: string `mongodb+srv://${username}:${password}@digigrama.pgauwpq.mongodb.net/`}});
     }
 
+    resource function post insertCertificate(@http:Payload json payload) returns error? {
+        CertificateRequest certificateRequest = check payload.cloneWithType(CertificateRequest);
+        _ = check self.databaseClient->insert(certificateRequest, collection, database);
+    }
+
     resource function get requestCertificate(string id) returns json|error? {
         stream<CertificateRequest, error?>|mongodb:Error CertificateStream = check self.databaseClient->find(collection, database, {_id: id});
         CertificateRequest[]|error certicates = from CertificateRequest CertificateRequest in check CertificateStream
