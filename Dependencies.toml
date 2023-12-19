@@ -33,7 +33,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "constraint"
-version = "1.5.0"
+version = "1.4.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]
@@ -41,7 +41,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "crypto"
-version = "2.6.1"
+version = "2.5.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"},
 	{org = "ballerina", name = "time"}
@@ -306,16 +306,29 @@ modules = [
 ]
 
 [[package]]
+org = "ballerinax"
+name = "mongodb"
+version = "4.3.0"
+dependencies = [
+	{org = "ballerina", name = "crypto"},
+	{org = "ballerina", name = "jballerina.java"}
+]
+modules = [
+	{org = "ballerinax", packageName = "mongodb", moduleName = "mongodb"}
+]
+
+[[package]]
 org = "chathura"
-name = "DigiGrama_APIGateway"
+name = "DigiGrama_CertificateGen"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "http"},
 	{org = "ballerina", name = "io"},
 	{org = "ballerina", name = "test"},
-	{org = "ballerinai", name = "observe"}
+	{org = "ballerinai", name = "observe"},
+	{org = "ballerinax", name = "mongodb"}
 ]
 modules = [
-	{org = "chathura", packageName = "DigiGrama_APIGateway", moduleName = "DigiGrama_APIGateway"}
+	{org = "chathura", packageName = "DigiGrama_CertificateGen", moduleName = "DigiGrama_CertificateGen"}
 ]
 
