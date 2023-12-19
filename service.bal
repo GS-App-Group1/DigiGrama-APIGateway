@@ -15,7 +15,7 @@ type CertificateRequest record {|
     string race;
     string nationality;
     string address;
-    string numberOfCrimes;
+    int numberOfCrimes;
 |};
 
 # Configurations for the MongoDB endpoint
