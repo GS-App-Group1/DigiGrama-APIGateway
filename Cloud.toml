@@ -20,4 +20,4 @@ memory=80
 
 [cloud.deployment.probes.liveness]
 port=9090
-path="/api/liveness"
+path="/certificate/liveness"
