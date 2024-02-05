@@ -4,7 +4,7 @@ info:
   description: API for generating and managing certificates
   version: 1.0.0
 servers:
-  - url: http://localhost:9090
+  - url: http://localhost:8080
 paths:
   /certificate:
     get:

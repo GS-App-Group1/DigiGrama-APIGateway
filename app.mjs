@@ -49,6 +49,7 @@ app.get('/liveness', (req, res) => {
 // Readiness route
 app.get('/readiness', async (req, res) =>{
     try {
+        const requestId = req.query.requestId;
         const dataObj = await UserRequest.findOne({ "_id": requestId });
         if (!dataObj) {
             return res.status(404).json({ error: 'Certificate request data not found' });
@@ -56,7 +57,7 @@ app.get('/readiness', async (req, res) =>{
 
         res.sendStatus(200);
     } catch (error) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: error.message });
     }
 })
 
