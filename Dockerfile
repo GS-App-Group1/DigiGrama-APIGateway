@@ -31,6 +31,9 @@ COPY . .
 RUN addgroup -g 10014 choreo && \
     adduser --disabled-password --no-create-home --uid 10014 --ingroup choreo choreouser
 
+# Expose port 8080
+EXPOSE 8080
+
 # Set a non-root user
 USER 10014
 

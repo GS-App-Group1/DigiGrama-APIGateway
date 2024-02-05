@@ -4,7 +4,7 @@ info:
   description: API for generating and managing certificates
   version: 1.0.0
 servers:
-  - url: http://localhost:9090
+  - url: http://localhost:8080
 paths:
   /certificate:
     get:
@@ -18,59 +18,59 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        '400':
+        "400":
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '404':
+                $ref: "#/components/schemas/Error"
+        "404":
           description: Certificate request data not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '500':
+                $ref: "#/components/schemas/Error"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
   /liveness:
     get:
       summary: Health check endpoint
       description: Endpoint for checking the liveness of the server
       responses:
-        '200':
+        "200":
           description: OK
-        '500':
+        "500":
           description: Internal server error
   /readiness:
     get:
       summary: Readiness check endpoint
       description: Endpoint for checking the readiness of the server
       responses:
-        '200':
+        "200":
           description: OK
-        '404':
+        "404":
           description: Certificate request data not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-        '500':
+                $ref: "#/components/schemas/Error"
+        "500":
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     Error:
