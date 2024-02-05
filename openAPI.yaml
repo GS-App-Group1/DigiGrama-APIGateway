@@ -1,86 +1,80 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
-  title: Certificate
-  version: 0.1.0
+  title: Certificate Generation API
+  description: API for generating and managing certificates
+  version: 1.0.0
 servers:
-  - url: "{server}:{port}/certificate"
-    variables:
-      server:
-        default: http://localhost
-      port:
-        default: "9090"
+  - url: http://localhost:3000
 paths:
-  /insertCertificate:
-    post:
-      operationId: postInsertcertificate
-      requestBody:
-        content:
-          application/json:
-            schema: {}
-      responses:
-        "202":
-          description: Accepted
-        "400":
-          description: BadRequest
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorPayload"
-  /requestCertificate:
+  /certificate:
     get:
-      operationId: getRequestcertificate
+      summary: Get certificate PDF
+      description: Retrieves a certificate PDF by request ID
       parameters:
-        - name: id
-          in: query
+        - in: query
+          name: requestId
+          description: ID of the certificate request
           required: true
           schema:
             type: string
       responses:
-        "200":
-          description: Ok
+        '200':
+          description: OK
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad request
           content:
             application/json:
               schema:
-                type: object
-        "202":
-          description: Accepted
-        "400":
-          description: BadRequest
-        "500":
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Certificate request data not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorPayload"
+                $ref: '#/components/schemas/Error'
   /liveness:
     get:
-      operationId: getLiveness
+      summary: Health check endpoint
+      description: Endpoint for checking the liveness of the server
       responses:
-        "200":
-          description: Ok
+        '200':
+          description: OK
+        '500':
+          description: Internal server error
+  /readiness:
+    get:
+      summary: Readiness check endpoint
+      description: Endpoint for checking the readiness of the server
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Certificate request data not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
-    ErrorPayload:
+    Error:
       type: object
       properties:
-        reason:
+        error:
           type: string
-          description: Reason phrase
-        path:
-          type: string
-          description: Request path
-        method:
-          type: string
-          description: Method type of the request
-        message:
-          type: string
-          description: Error message
-        timestamp:
-          type: string
-          description: Timestamp of the error
-        status:
-          type: integer
-          description: Relevant HTTP status code
-          format: int32
