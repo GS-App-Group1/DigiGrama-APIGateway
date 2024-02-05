@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import express from 'express';
 import config from "./config.mjs"
 import fs from "fs"
-import path from "path"
 import exportHTMLtoPDF from './utils/utils.mjs';
 import UserRequest from './model/UserRequest.mjs';
 
@@ -35,7 +34,7 @@ app.get('/certificate', async (req, res) => {
         fs.unlinkSync(outputFilename)
       }
 
-      exportHTMLtoPDF(dataObj, outputFilename, res)
+      await exportHTMLtoPDF(dataObj, outputFilename, res)
 
     } catch (err) {
       res.status(500).json({ error: err.message });

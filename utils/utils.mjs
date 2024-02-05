@@ -1,8 +1,9 @@
-import pdf from "pdf-creator-node"
+import puppeteer from 'puppeteer';
+import fs from "fs"
 
-const exportHTMLtoPDF = (dataObj, outputFilename, response) => {
+const exportHTMLtoPDF = async (dataObj, outputFilename, response) => {
   // Read HTML template
-  var html = `<!DOCTYPE html>
+  var htmlContent = `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -90,28 +91,27 @@ const exportHTMLtoPDF = (dataObj, outputFilename, response) => {
       </div>
   </body>
   </html>`
-  
-  // By default a file is created but you could switch between Buffer and Streams by using "buffer" or "stream" respectively.
-  const document = {
-    html: html.replace(
-      /\b(?:nic|email|address|civilStatus|presentOccupation|reason|gsDivision|date)\b/g,
-      (matched) => dataObj[matched]
-    ),
-    data: {},
-    path: outputFilename,
-    type: "", // "stream" || "buffer" || "" ("" defaults to pdf)
-  };
-  
-  pdf
-    .create(document)
-    .then((res) => {
-      console.log(res);
-      response.sendFile(res.filename)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
 
+  htmlContent = htmlContent.replace(
+    /\b(?:nic|email|address|civilStatus|presentOccupation|reason|gsDivision|date)\b/g,
+    (matched) => dataObj[matched]
+  )
+  
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  
+  // Set the HTML content and generate PDF
+  await page.setContent(htmlContent);
+  await page.pdf({ path: outputFilename, format: 'A4' });
+  
+  // Close the browser
+  await browser.close();
+
+  
+  // Stream the PDF file to the response
+  const pdfStream = fs.createReadStream(outputFilename);
+  pdfStream.pipe(response);
+  
 }
 export default exportHTMLtoPDF
 
