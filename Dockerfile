@@ -31,10 +31,7 @@ COPY . .
 RUN addgroup -g 10014 choreo && \
     adduser --disabled-password --no-create-home --uid 10014 --ingroup choreo choreouser
 
-# Set permissions
-USER root
-RUN chmod -R 777 /usr/src/app
+# Set a non-root user
 USER 10014
 
-# Grant permissions to create child processes
-CMD [ "node", "--unhandled-rejections=strict", "--no-warnings", "index.mjs" ]
+CMD [ "node", "index.mjs" ]
