@@ -30,11 +30,7 @@ COPY . .
 # Create a new user with UID 10014
 RUN addgroup -g 10014 choreo && \
     adduser --disabled-password --no-create-home --uid 10014 --ingroup choreo choreouser
-
-RUN mkdir -p /usr/src/app/certificates && \
-    chown -R 10014:10014 /usr/src/app/certificates && \
-    chmod -R 777 /usr/src/app/certificates
-
+    
 # Expose port 8080
 EXPOSE 8080
 
