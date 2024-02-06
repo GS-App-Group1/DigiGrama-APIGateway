@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /certificate/get-certificate:
+  /get-certificate:
     get:
       summary: Get certificate PDF
       description: Retrieves a certificate PDF by request ID
@@ -43,7 +43,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /certificate/liveness:
+  /liveness:
     get:
       summary: Health check endpoint
       description: Endpoint for checking the liveness of the server
@@ -52,7 +52,7 @@ paths:
           description: OK
         '500':
           description: Internal server error
-  /certificate/readiness:
+  /readiness:
     get:
       summary: Readiness check endpoint
       description: Endpoint for checking the readiness of the server
