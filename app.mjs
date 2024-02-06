@@ -2,8 +2,11 @@ import mongoose from 'mongoose';
 import express from 'express';
 import config from "./config.mjs"
 import fs from "fs"
-import exportHTMLtoPDF from './utils/utils.mjs';
+import createPdf from './utils/utils.mjs';
 import UserRequest from './model/UserRequest.mjs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
 
 // Create the express app
 const app = express()
@@ -34,7 +37,21 @@ app.get('/certificate', async (req, res) => {
         fs.unlinkSync(outputFilename)
       }
 
-      await exportHTMLtoPDF(dataObj, outputFilename, res)
+      createPdf(dataObj, outputFilename)
+        .then((pdfFilePath) => {
+            // Send the PDF file as a response
+            const currentFileUrl = import.meta.url;
+            const currentFilePath = fileURLToPath(currentFileUrl);
+            const currentDirName = dirname(currentFilePath);
+            const filePath = join(currentDirName, pdfFilePath)
+            console.log(pdfFilePath)
+            res.contentType('application/pdf');
+            res.sendFile(filePath);
+        })
+        .catch((error) => {
+            console.error('Error creating PDF:', error);
+            // Handle error
+        });
 
     } catch (err) {
       res.status(500).json({ error: err.message });
