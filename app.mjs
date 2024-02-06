@@ -20,7 +20,7 @@ mongoose.connect(uri, clientOptions)
 .catch(err => console.error('Failed to connect to MongoDB:', err));
 
 // Define a route to find an userRequest by name
-app.get('/certificate', async (req, res) => {
+app.get('/certificate/get-certificate', async (req, res) => {
     try {
       const requestId = req.query.requestId;
       if (!requestId) {
@@ -59,12 +59,12 @@ app.get('/certificate', async (req, res) => {
   });
 
 // Liveness route
-app.get('/liveness', (req, res) => {
+app.get('/certificate/liveness', (req, res) => {
     res.sendStatus(200);
   });
 
 // Readiness route
-app.get('/readiness', async (req, res) =>{
+app.get('/certificate/readiness', async (req, res) =>{
     try {
         const requestId = req.query.requestId;
         const dataObj = await UserRequest.findOne({ "_id": requestId });
